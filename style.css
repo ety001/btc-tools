@@ -1,0 +1,64 @@
+body {
+    font-family: Arial;
+}
+.status {
+    margin-bottom: 10px;
+}
+.status .small_box {
+    float: left;
+    width: 100px;
+    padding: 5px 15px;
+    font-family: Arial;
+    font-size: 10px;
+}
+.status .box {
+    width: 96px;
+    height: 30px;
+    line-height: 30px;
+    margin: 0 10px;
+    padding: 4px 20px;
+    background-color: #ccc;
+    float: left;
+}
+.status:after {
+    content: '';
+    display: block;
+    clear: both;
+}
+.status button {
+    display: block;
+    width: 96px;
+    height: 30px;
+    line-height: 14px;
+    margin: 0 10px;
+    padding: 4px 20px;
+    background-color: #ddd;
+    float: left;
+    border: 0;
+}
+.status input {
+    display: block;
+    width: 96px;
+    height: 24px;
+    float: left;
+    text-align: center;
+}
+#buy, .status .buy {
+    background-color: #21DA52 !important;
+    color: #fff;
+}
+#sell, .status .sell {
+    background-color: #F14646 !important;
+    color: #fff;
+}
+#last {
+    background-color: #85D0E6 !important;
+    color: #585555;
+}
+.error {
+    margin: 10px;
+    padding: 10px;
+    width: 300px;
+    background-color: #EF7777;
+    color: #fff;
+}

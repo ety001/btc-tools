@@ -9,6 +9,7 @@ if(file_exists('.env')){
 <!DOCTYPE html>
 <meta charset="utf-8" />
 <title>WebSocket Test</title>
+<script type="text/javascript" src="jquery-1.11.3.min.js"></script>
 <script type="text/javascript" src="MD5.js"></script>
 <script type="text/javascript">  
     var wsUri ="wss://real.okcoin.cn:10440/websocket/okcoinapi"; 
@@ -108,8 +109,48 @@ if(file_exists('.env')){
     function onMessage(evt) { 
         //writeToScreen('<span style="color: blue;">RESPONSE: '+ evt.data+'</span>'); 
         var myList = evt.data;    
-        console.log(myList);
+        //console.log(myList);
+        var myList1 = JSON.parse(myList);
+        myList1 = myList1[0];
+        var data = myList1.data;
+        var len = data.length - 1;
+        var last_data_type = (data[len][4]=='bid')?'bid':'ask';
+        var last_bid_price = 0;
+        var last_ask_price = 0;
+        var find_type = '';
+        if(last_data_type=='bid'){
+            last_bid_price = data[len][1];
+            find_type = 'ask';
+        } else {
+            last_ask_price = data[len][1];
+            find_type = 'bid';
+        }
+        var bid_num = 0;
+        var ask_num = 0;
+        var no_find = 1;
+        for(var i = len; i>=0; i--){
+            if(data[i][4]=='bid'){
+                bid_num++;
+            } else {
+                ask_num++;
+            }
+            if(data[i][4]==find_type&&no_find){
+                if(find_type=='bid'){
+                    last_bid_price = data[i][1];
+                    no_find = 0;
+                } else {
+                    last_ask_price = data[i][1];
+                    no_find = 0;
+                }
+            }
+        }
+        console.log('last_bid_price', last_bid_price);
+        console.log('last_ask_price', last_ask_price);
+        console.log('bid_num', bid_num);
+        console.log('ask_num', ask_num);
+        console.log('!!', (bid_num<ask_num)?'down':'up');
         console.log(new Date().getTime())
+
         var array = JSON.parse(myList)
         var result = array.event;
         var isTrade = false;
