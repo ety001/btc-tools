@@ -3,6 +3,7 @@ var output;
 var lastHeartBeat = new Date().getTime();
 var overtime = 8000;
 var last_price = 0;
+var notification_val = 0;
 
 var abc = {
     obj : null,
@@ -145,6 +146,10 @@ var info = {
         //$('#high').html('最高:'+d.high);
         $('#last').html('成交:'+d.last);
         last_price = d.last;
+        if(notification_val>0 && last_price>notification_val){
+            var notification = new Notification('okcoin',{body:">"+notification_val});
+            notification_val = 0;
+        }
     },
     ok_spotcny_trade : function(d){
         helper.msg(JSON.stringify(d));
@@ -170,6 +175,18 @@ var helper = {
         setTimeout(function(){
             obj.fadeOut('fast').remove();
         },2000)
+    },
+    set_notifications : function(val){
+        notification_val = val;
+        if (window.Notification){
+            console.log('set alert');
+            helper.msg('Set Alert');
+            if(Notification.Permission==='granted'){
+                
+            }else {
+                Notification.requestPermission();
+            };
+        }else alert('你的浏览器不支持此特性，请下载谷歌浏览器试用该功能');
     }
 }
 
@@ -188,5 +205,9 @@ $(function(){
     $('.sell').click(function(){
         var amount = $(this).prev().val();
         abc.sell(amount);
+    });
+    $('#alert').click(function(){
+        if($(this).prev().val()==0)return;
+        helper.set_notifications($(this).prev().val());
     });
 });

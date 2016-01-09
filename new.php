@@ -56,6 +56,10 @@ if(file_exists('.env')){
         <input type="text" class="amount" value="0.02" />
         <button class="sell">Sell</button>
     </div>
+    <div class="status">
+        <input type="text" value="0" />
+        <button id="alert" class="alert">Alert</button>
+    </div>
     <div class="status msg">
     </div>
 </body>
