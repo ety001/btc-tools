@@ -4,6 +4,7 @@ var lastHeartBeat = new Date().getTime();
 var overtime = 8000;
 var last_price = 0;
 var notification_val = 0;
+var notification_val2 = 0;
 
 var abc = {
     obj : null,
@@ -150,6 +151,10 @@ var info = {
             var notification = new Notification('okcoin',{body:">"+notification_val});
             notification_val = 0;
         }
+        if(notification_val2>0 && last_price<notification_val2){
+            var notification = new Notification('okcoin',{body:"<"+notification_val2});
+            notification_val2 = 0;
+        }
     },
     ok_spotcny_trade : function(d){
         helper.msg(JSON.stringify(d));
@@ -171,15 +176,28 @@ var info = {
 var helper = {
     msg : function(msg){
         var obj = $('<div class="error" id="m'+new Date().getTime()+'">'+msg+'</div>');
-        $('.msg').append(obj);
+        //$('.msg').append(obj);
+        $('.msg').before(obj);
         setTimeout(function(){
             obj.fadeOut('fast').remove();
-        },2000)
+        },2000);
     },
     set_notifications : function(val){
         notification_val = val;
         if (window.Notification){
             console.log('set alert');
+            helper.msg('Set Alert');
+            if(Notification.Permission==='granted'){
+                
+            }else {
+                Notification.requestPermission();
+            };
+        }else alert('你的浏览器不支持此特性，请下载谷歌浏览器试用该功能');
+    },
+    set_notifications2 : function(val){
+        notification_val2 = val;
+        if (window.Notification){
+            console.log('set alert down');
             helper.msg('Set Alert');
             if(Notification.Permission==='granted'){
                 
@@ -209,5 +227,9 @@ $(function(){
     $('#alert').click(function(){
         if($(this).prev().val()==0)return;
         helper.set_notifications($(this).prev().val());
+    });
+    $('#alert2').click(function(){
+        if($(this).prev().val()==0)return;
+        helper.set_notifications2($(this).prev().val());
     });
 });

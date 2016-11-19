@@ -58,7 +58,11 @@ if(file_exists('.env')){
     </div>
     <div class="status">
         <input type="text" value="0" />
-        <button id="alert" class="alert">Alert</button>
+        <button id="alert" class="alert">Alert Up</button>
+    </div>
+    <div class="status">
+        <input type="text" value="0" />
+        <button id="alert2" class="alert">Alert Down</button>
     </div>
     <div class="status msg">
     </div>
