@@ -147,6 +147,7 @@ var info = {
         //$('#high').html('最高:'+d.high);
         $('#last').html('成交:'+d.last);
         last_price = d.last;
+        $('title').html('￥'+last_price+' -- WebSocket');
         if(notification_val>0 && last_price>notification_val){
             var notification = new Notification('okcoin',{body:">"+notification_val});
             notification_val = 0;
